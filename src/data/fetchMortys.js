@@ -5,9 +5,13 @@ const config = {
   }
 };
 
-export const fetchMortys = url => {
+export const fetchMortys = page => {
+  let url = `https://rickandmortyapi.com/api/character?page=${page}`;
   return axios.get(url, config).then(res => {
-    const { results } = res.data;
-    return results;
+    const { results, info } = res.data;
+    return {
+      results,
+      info
+    };
   });
 };
