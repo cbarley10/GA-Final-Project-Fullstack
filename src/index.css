@@ -18,7 +18,7 @@ code {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-end;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 body .page {
@@ -35,14 +35,71 @@ body .page {
   outline: none;
 }
 
+.page .all button {
+  margin-bottom: 10px;
+}
+
 .page button:focus {
   outline: 0;
 }
 
 .morty {
-  width: 33%;
+  width: 31%;
+  padding: 10px;
   margin: 30px 0;
   text-align: center;
+}
+
+.species span {
+  display: inline-block;
+  color: white;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.species .human {
+  background: skyblue;
+}
+
+.species .alien {
+  background: greenyellow;
+}
+
+.species .humanoid {
+  background: tomato;
+}
+
+.species .unknown {
+  background: gray;
+}
+
+.species .poopybutthole {
+  background: brown;
+}
+
+.species .mytholog {
+  background: purple;
+}
+.species .robot {
+  background: silver;
+}
+.species .disease {
+  background: #8a9a5b;
+}
+
+.species .cronenberg {
+  background: tan;
+}
+
+.species .parasite {
+  background: pink;
+}
+
+.species .animal {
+  background: blue;
+}
+.species .vampire {
+  background: black;
 }
 
 .alive {
@@ -66,6 +123,27 @@ body .page {
 img {
   max-width: 100%;
   height: auto;
+  background: #f1f1fa;
+  width: 400px;
+  height: 300px;
+  display: block;
+  border: 0;
+}
+
+.page-numbers {
+  margin: 15px;
+}
+
+.page-numbers button {
+  margin: 0 5px;
+}
+
+button.previous {
+  margin-right: 10px;
+}
+
+body .current {
+  background: rgba(171, 213, 236, 0.6);
 }
 
 @media (max-width: 992px) {

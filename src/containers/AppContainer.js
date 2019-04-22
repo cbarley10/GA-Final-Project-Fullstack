@@ -3,13 +3,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Pagination from "../components/Pagination";
 import Header from "../components/Header";
 import Mortys from "../components/Mortys";
-import { fetchMortys } from "../data/fetchMortys";
+import { fetchMortys } from "../utils/fetchMortys";
 
 class AppContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      myData: [],
+      pageData: [],
+      allData: [],
       page: 1,
       maxPages: 0,
       loading: true
@@ -21,7 +22,7 @@ class AppContainer extends Component {
     fetchMortys(page).then(response => {
       const { results, info } = response;
       this.setState({
-        myData: results,
+        pageData: results,
         maxPages: info.pages,
         loading: false
       });
@@ -34,7 +35,7 @@ class AppContainer extends Component {
       fetchMortys(page).then(response => {
         const { results, info } = response;
         this.setState({
-          myData: results,
+          pageData: results,
           maxPages: info.pages,
           loading: false
         });
@@ -58,8 +59,14 @@ class AppContainer extends Component {
     });
   };
 
+  handlePageNumberClick = e => {
+    this.setState({
+      page: Number(e.target.id) + 1
+    });
+  };
+
   render() {
-    const { myData, page, maxPages, loading } = this.state;
+    const { pageData, page, maxPages, loading, allData } = this.state;
     return (
       <div>
         <Header />
@@ -78,16 +85,11 @@ class AppContainer extends Component {
             <Pagination
               handleNextClick={this.handleNextClick}
               handlePrevClick={this.handlePrevClick}
+              handlePageNumberClick={this.handlePageNumberClick}
               page={page}
               maxPages={maxPages}
             />
-            <Mortys data={myData} />
-            <Pagination
-              handleNextClick={this.handleNextClick}
-              handlePrevClick={this.handlePrevClick}
-              page={page}
-              maxPages={maxPages}
-            />
+            <Mortys data={pageData} allData={allData} />
           </div>
         )}
       </div>
