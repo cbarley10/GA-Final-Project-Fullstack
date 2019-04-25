@@ -1,13 +1,15 @@
 import React from "react";
+import { MortyImage, MortyCard } from "../styled-components/Morty";
 
-const Mortys = ({ data, allData }) => {
+const Mortys = ({ data }) => {
   return (
     <div className="container mortys">
       {data &&
         data.map(item => {
           return (
-            <div key={item.id} className="morty card">
-              <h1>{item.name} </h1>
+            <MortyCard key={item.id} className="card">
+              <MortyImage src={item.image} alt={item.image} />
+              <h1>{item.name}</h1>
               <p>
                 Status:{" "}
                 <span className={item.status.toLowerCase()}>{item.status}</span>
@@ -18,8 +20,7 @@ const Mortys = ({ data, allData }) => {
                   {item.species}
                 </span>
               </p>
-              <img src={item.image} alt={item.image} />
-            </div>
+            </MortyCard>
           );
         })}
     </div>

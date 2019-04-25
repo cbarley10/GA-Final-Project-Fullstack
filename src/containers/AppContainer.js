@@ -61,7 +61,8 @@ class AppContainer extends Component {
 
   handlePageNumberClick = e => {
     this.setState({
-      page: Number(e.target.id) + 1
+      page: Number(e.target.id) + 1,
+      loading: true
     });
   };
 

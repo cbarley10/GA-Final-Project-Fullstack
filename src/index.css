@@ -17,7 +17,6 @@ code {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: flex-end;
   justify-content: space-around;
 }
 
