@@ -9,8 +9,7 @@ class AppContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageData: [],
-      allData: [],
+      characters: [],
       page: 1,
       maxPages: 0,
       loading: true
@@ -22,7 +21,7 @@ class AppContainer extends Component {
     fetchMortys(page).then(response => {
       const { results, info } = response;
       this.setState({
-        pageData: results,
+        characters: results,
         maxPages: info.pages,
         loading: false
       });
@@ -35,7 +34,7 @@ class AppContainer extends Component {
       fetchMortys(page).then(response => {
         const { results, info } = response;
         this.setState({
-          pageData: results,
+          characters: results,
           maxPages: info.pages,
           loading: false
         });
@@ -67,7 +66,7 @@ class AppContainer extends Component {
   };
 
   render() {
-    const { pageData, page, maxPages, loading, allData } = this.state;
+    const { characters, page, maxPages, loading } = this.state;
     return (
       <div>
         <Header />
@@ -90,7 +89,7 @@ class AppContainer extends Component {
               page={page}
               maxPages={maxPages}
             />
-            <Mortys data={pageData} allData={allData} />
+            <Mortys data={characters} />
           </div>
         )}
       </div>

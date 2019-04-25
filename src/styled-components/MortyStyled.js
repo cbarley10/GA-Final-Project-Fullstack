@@ -23,4 +23,11 @@ const MortyCard = styled.div`
   }
 `;
 
-export { MortyImage, MortyCard };
+const MortyContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
+
+export { MortyImage, MortyCard, MortyContainer };

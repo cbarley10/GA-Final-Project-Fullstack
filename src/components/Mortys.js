@@ -1,9 +1,13 @@
 import React from "react";
-import { MortyImage, MortyCard } from "../styled-components/Morty";
+import {
+  MortyImage,
+  MortyCard,
+  MortyContainer
+} from "../styled-components/MortyStyled";
 
 const Mortys = ({ data }) => {
   return (
-    <div className="container mortys">
+    <MortyContainer className="container">
       {data &&
         data.map(item => {
           return (
@@ -23,7 +27,7 @@ const Mortys = ({ data }) => {
             </MortyCard>
           );
         })}
-    </div>
+    </MortyContainer>
   );
 };
 
