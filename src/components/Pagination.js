@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { VISIBLE_PAGE_NUMS } from "../constants";
 import { startingIndex } from "../utils/pagination";
+import DropdownOptions from "./DropdownOptions";
 
 class Pagination extends Component {
   render() {
@@ -9,7 +10,9 @@ class Pagination extends Component {
       handlePrevClick,
       page,
       maxPages,
-      handlePageNumberClick
+      handlePageNumberClick,
+      handleFilterChange,
+      currentFilter
     } = this.props;
 
     const renderPageNumbers = [...Array(maxPages)]
@@ -33,7 +36,17 @@ class Pagination extends Component {
         <p>
           <strong>page:</strong> {page}/{maxPages}
         </p>
-        <div className="page-numbers">{renderPageNumbers}</div>
+        <p>
+          {currentFilter ? (
+            <div>
+              <strong>Filtering By: </strong> {currentFilter.toUpperCase()}
+            </div>
+          ) : null}
+        </p>
+        <DropdownOptions handleFilterChange={handleFilterChange} />
+        {currentFilter ? null : (
+          <div className="page-numbers">{renderPageNumbers}</div>
+        )}
         {page === 1 ? null : (
           <button className="previous" onClick={handlePrevClick}>
             back

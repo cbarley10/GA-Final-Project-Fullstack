@@ -3,7 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Pagination from "../components/Pagination";
 import Header from "../components/Header";
 import Mortys from "../components/Mortys";
-import { fetchMortys } from "../utils/fetchMortys";
+import { MAIN_URL } from "../constants";
+import { fetchMortys, fetchAllMortys } from "../utils/fetchMortys";
 
 class AppContainer extends Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class AppContainer extends Component {
       characters: [],
       page: 1,
       maxPages: 0,
-      loading: true
+      loading: true,
+      currentFilter: ""
     };
   }
 
@@ -65,8 +67,38 @@ class AppContainer extends Component {
     });
   };
 
+  handleFilterChange = e => {
+    let selected = e.target.value;
+    let filterBy = e.target.id;
+
+    this.setState({
+      loading: true,
+      currentFilter: selected
+    });
+
+    if (filterBy === "species") {
+      fetchAllMortys(MAIN_URL, []).then(res => {
+        this.setState({
+          characters: res.filter(
+            item => item.species.toLowerCase() === selected
+          ),
+          loading: false
+        });
+      });
+    } else {
+      fetchAllMortys(MAIN_URL, []).then(res => {
+        this.setState({
+          characters: res.filter(
+            item => item.status.toLowerCase() === selected
+          ),
+          loading: false
+        });
+      });
+    }
+  };
+
   render() {
-    const { characters, page, maxPages, loading } = this.state;
+    const { characters, page, maxPages, loading, currentFilter } = this.state;
     return (
       <div>
         <Header />
@@ -88,6 +120,8 @@ class AppContainer extends Component {
               handlePageNumberClick={this.handlePageNumberClick}
               page={page}
               maxPages={maxPages}
+              handleFilterChange={this.handleFilterChange}
+              currentFilter={currentFilter}
             />
             <Mortys data={characters} />
           </div>

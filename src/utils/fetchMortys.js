@@ -29,8 +29,4 @@ const fetchAllMortys = (url, arr) => {
   });
 };
 
-// const filterSpecies = (arr, species) => {
-//   return arr.filter(item => item.species.toLowerCase() === species);
-// };
-
 export { fetchMortys, fetchAllMortys };
