@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SignUpModal from "./SignUpModal";
 import SignInModal from "./SignInModal";
+import axios from "axios";
 
 class Header extends Component {
   constructor(props) {
@@ -9,6 +10,24 @@ class Header extends Component {
       name: "Rick and Morty Dictionary"
     };
   }
+
+  handleSignOut = e => {
+    e.preventDefault();
+    console.log(localStorage.getItem("x-auth"));
+    let config = {
+      headers: {
+        "Content-type": "application/json",
+        "x-auth": localStorage.getItem("x-auth")
+      }
+    };
+    axios.delete("http://localhost:4000/users/me/token", config).then(res => {
+      if (res.status === 200) {
+        localStorage.removeItem("x-auth");
+        window.location.reload();
+      }
+    });
+  };
+
   render = () => {
     return (
       <div>
@@ -19,9 +38,10 @@ class Header extends Component {
             </a>
             <div className="navbar-nav ml-auto">
               {localStorage.getItem("x-auth") ? (
-                <div>
+                <React.Fragment>
                   Welcome {localStorage.getItem("firstname").toUpperCase()}
-                </div>
+                  <button onClick={this.handleSignOut}>Logout</button>
+                </React.Fragment>
               ) : (
                 <React.Fragment>
                   <SignUpModal />

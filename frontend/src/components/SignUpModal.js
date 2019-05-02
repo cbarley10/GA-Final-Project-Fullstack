@@ -7,9 +7,10 @@ class SignupModal extends React.Component {
     super(props);
     this.state = {
       open: false,
+      firstname: "",
+      lastname: "",
       email: "",
-      password: "",
-      firstname: ""
+      password: ""
     };
   }
 
@@ -25,27 +26,32 @@ class SignupModal extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { email, password } = this.state;
+    const { firstname, lastname, email, password } = this.state;
     let config = {
       headers: {
         "Content-type": "application/json"
       }
     };
+
     axios
       .post(
-        "http://localhost:4000/users/login",
+        "http://localhost:4000/user",
         {
+          firstname,
+          lastname,
           email,
           password
         },
         config
       )
       .then(res => {
-        const { headers, data } = res;
+        const { headers } = res;
         localStorage.setItem("x-auth", headers["x-auth"]);
-        localStorage.setItem("firstname", data.firstname);
+        window.location.reload();
       });
     this.setState({
+      firstname: "",
+      lastname: "",
       email: "",
       password: "",
       open: false
@@ -53,18 +59,40 @@ class SignupModal extends React.Component {
   };
 
   render() {
-    const { open, email, password } = this.state;
+    const { open, firstname, lastname, email, password } = this.state;
     return (
-      <div>
-        <button onClick={this.onOpenModal}>Sign In</button>
+      <React.Fragment>
+        <button onClick={this.onOpenModal}>Sign Up</button>
         <Modal open={open} onClose={this.onCloseModal} center>
-          <h5 className="modal-title">Sign In</h5>
+          <h5 className="modal-title">Sign Up</h5>
           <div className="modal-body">
             <form
-              action="localhost:4000/user/signin"
+              action="localhost:4000/user"
               method="POST"
               onSubmit={this.onSubmit}
             >
+              <div className="form-group">
+                <label htmlFor="firstname">First Name</label>
+                <input
+                  type="text"
+                  name="firstname"
+                  value={firstname}
+                  placeholder="First Name"
+                  className="form-control"
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="lastname">Last Name</label>
+                <input
+                  type="text"
+                  name="lastname"
+                  value={lastname}
+                  placeholder="Last Name"
+                  className="form-control"
+                  onChange={this.onChange}
+                />
+              </div>
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
@@ -92,7 +120,7 @@ class SignupModal extends React.Component {
             </form>
           </div>
         </Modal>
-      </div>
+      </React.Fragment>
     );
   }
 }
