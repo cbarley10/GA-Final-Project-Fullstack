@@ -16,7 +16,9 @@ const Mortys = ({ data }) => {
               <h1>{item.name}</h1>
               <p>
                 Status:{" "}
-                <span className={item.status.toLowerCase()}>{item.status}</span>
+                <span className={`${item.status.toLowerCase()} status`}>
+                  {item.status}
+                </span>
               </p>
               <p className="species">
                 Species:{" "}

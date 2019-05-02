@@ -38,9 +38,12 @@ class Pagination extends Component {
         </p>
         <p>
           {currentFilter ? (
-            <div>
-              <strong>Filtering By: </strong> {currentFilter.toUpperCase()}
-            </div>
+            <span className="filter">
+              <strong>Filtering By: </strong>{" "}
+              <span className={currentFilter.toLowerCase()}>
+                {currentFilter.toUpperCase()}
+              </span>
+            </span>
           ) : null}
         </p>
         <DropdownOptions handleFilterChange={handleFilterChange} />

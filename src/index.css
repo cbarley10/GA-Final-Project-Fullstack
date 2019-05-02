@@ -49,55 +49,56 @@ body .page {
   text-align: center;
 }
 
-.species span {
+.species span,
+.filter span {
   display: inline-block;
   color: white;
   border-radius: 5px;
   padding: 3px;
 }
 
-.species .human {
+.human {
   background: skyblue;
 }
 
-.species .alien {
+.alien {
   background: greenyellow;
 }
 
-.species .humanoid {
+.humanoid {
   background: tomato;
 }
 
-.species .unknown {
+.unknown {
   background: gray;
 }
 
-.species .poopybutthole {
+.poopybutthole {
   background: brown;
 }
 
-.species .mytholog {
+.mytholog {
   background: purple;
 }
-.species .robot {
+.robot {
   background: silver;
 }
-.species .disease {
+.disease {
   background: #8a9a5b;
 }
 
-.species .cronenberg {
+.cronenberg {
   background: tan;
 }
 
-.species .parasite {
+.parasite {
   background: pink;
 }
 
-.species .animal {
+.animal {
   background: blue;
 }
-.species .vampire {
+.vampire {
   background: black;
 }
 
@@ -143,6 +144,14 @@ button.previous {
 
 body .current {
   background: rgba(171, 213, 236, 0.6);
+}
+
+div[class*="styles_modal"] {
+  width: 100%;
+}
+
+.status.unknown {
+  background: transparent;
 }
 
 @media (max-width: 992px) {

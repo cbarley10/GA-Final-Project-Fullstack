@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import SignUpModal from "./SignUpModal";
+import SignInModal from "./SignInModal";
 
 class Header extends Component {
   constructor(props) {
@@ -15,6 +17,18 @@ class Header extends Component {
             <a href="/" className="navbar-brand">
               {this.state.name}
             </a>
+            <div className="navbar-nav ml-auto">
+              {localStorage.getItem("x-auth") ? (
+                <div>
+                  Welcome {localStorage.getItem("firstname").toUpperCase()}
+                </div>
+              ) : (
+                <React.Fragment>
+                  <SignUpModal />
+                  <SignInModal />
+                </React.Fragment>
+              )}
+            </div>
           </div>
         </nav>
       </div>
