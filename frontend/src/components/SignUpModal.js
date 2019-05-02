@@ -46,6 +46,7 @@ class SignupModal extends React.Component {
       )
       .then(res => {
         const { headers } = res;
+        localStorage.setItem("firstname", firstname);
         localStorage.setItem("x-auth", headers["x-auth"]);
         window.location.reload();
       });

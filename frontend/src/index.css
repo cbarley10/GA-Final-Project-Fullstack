@@ -154,6 +154,12 @@ div[class*="styles_modal"] {
   background: transparent;
 }
 
+span.welcome {
+  color: white;
+  display: inline-block;
+  margin-right: 20px;
+}
+
 @media (max-width: 992px) {
   body h1 {
     font-size: 1.5rem;

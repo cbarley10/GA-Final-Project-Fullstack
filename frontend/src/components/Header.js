@@ -23,6 +23,7 @@ class Header extends Component {
     axios.delete("http://localhost:4000/users/me/token", config).then(res => {
       if (res.status === 200) {
         localStorage.removeItem("x-auth");
+        localStorage.removeItem("firstname");
         window.location.reload();
       }
     });
@@ -39,7 +40,9 @@ class Header extends Component {
             <div className="navbar-nav ml-auto">
               {localStorage.getItem("x-auth") ? (
                 <React.Fragment>
-                  Welcome {localStorage.getItem("firstname").toUpperCase()}
+                  <span className="welcome">
+                    Welcome {localStorage.getItem("firstname")}!
+                  </span>
                   <button onClick={this.handleSignOut}>Logout</button>
                 </React.Fragment>
               ) : (

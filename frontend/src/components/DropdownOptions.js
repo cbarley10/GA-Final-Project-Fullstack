@@ -6,7 +6,6 @@ const DropdownOptions = props => {
   return (
     <div>
       <div>
-        <label htmlFor="species">Filter By Species: </label>
         <select id="species" onChange={handleFilterChange}>
           <option key="-100" value="-----">
             -- Filter By Species --
@@ -20,7 +19,6 @@ const DropdownOptions = props => {
         </select>
       </div>
       <div>
-        <label htmlFor="status">Filter By Status: </label>
         <select id="status" onChange={handleFilterChange}>
           <option key="-100" value="-----">
             -- Filter By Status --
