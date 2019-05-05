@@ -33,9 +33,12 @@ class Pagination extends Component {
 
     return (
       <div className="container page">
-        <p>
-          <strong>page:</strong> {page}/{maxPages}
-        </p>
+        {currentFilter ? null : (
+          <p>
+            <strong>page:</strong> {page}/{maxPages}
+          </p>
+        )}
+
         <p>
           {currentFilter ? (
             <span className="filter">
@@ -50,12 +53,12 @@ class Pagination extends Component {
         {currentFilter ? null : (
           <div className="page-numbers">{renderPageNumbers}</div>
         )}
-        {page === 1 ? null : (
+        {page === 1 || currentFilter ? null : (
           <button className="previous" onClick={handlePrevClick}>
             back
           </button>
         )}
-        {page === maxPages ? null : (
+        {page === maxPages || currentFilter ? null : (
           <button className="next" onClick={handleNextClick}>
             next
           </button>

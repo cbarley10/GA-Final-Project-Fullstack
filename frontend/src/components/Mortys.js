@@ -5,13 +5,17 @@ import {
   MortyContainer
 } from "../styled-components/MortyStyled";
 
-const Mortys = ({ data }) => {
+const Mortys = props => {
+  const { data, handleCardClick } = props;
   return (
     <MortyContainer className="container">
       {data &&
         data.map(item => {
           return (
             <MortyCard key={item.id} className="card">
+              <span className="star" onClick={handleCardClick(item)}>
+                star
+              </span>
               <MortyImage src={item.image} alt={item.image} />
               <h1>{item.name}</h1>
               <p>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SignUpModal from "./SignUpModal";
 import SignInModal from "./SignInModal";
-import axios from "axios";
+import { signOut } from "../utils/signOut";
 
 class Header extends Component {
   constructor(props) {
@@ -13,20 +13,7 @@ class Header extends Component {
 
   handleSignOut = e => {
     e.preventDefault();
-    console.log(localStorage.getItem("x-auth"));
-    let config = {
-      headers: {
-        "Content-type": "application/json",
-        "x-auth": localStorage.getItem("x-auth")
-      }
-    };
-    axios.delete("http://localhost:4000/users/me/token", config).then(res => {
-      if (res.status === 200) {
-        localStorage.removeItem("x-auth");
-        localStorage.removeItem("firstname");
-        window.location.reload();
-      }
-    });
+    signOut();
   };
 
   render = () => {

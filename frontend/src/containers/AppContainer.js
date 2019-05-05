@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Mortys from "../components/Mortys";
 import { MAIN_URL } from "../constants";
 import { fetchMortys, fetchAllMortys } from "../utils/fetchMortys";
+import postMorty from "../utils/addFavorite";
 
 class AppContainer extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class AppContainer extends Component {
       page: 1,
       maxPages: 0,
       loading: true,
-      currentFilter: ""
+      currentFilter: null
     };
   }
 
@@ -48,7 +49,8 @@ class AppContainer extends Component {
     const { page } = this.state;
     this.setState({
       page: page + 1,
-      loading: true
+      loading: true,
+      currentFilter: ""
     });
   };
 
@@ -56,7 +58,8 @@ class AppContainer extends Component {
     const { page } = this.state;
     this.setState({
       page: page - 1,
-      loading: true
+      loading: true,
+      currentFilter: ""
     });
   };
 
@@ -97,6 +100,20 @@ class AppContainer extends Component {
     }
   };
 
+  handleCardClick = item => {
+    return () => {
+      if (localStorage.getItem("x-auth")) {
+        postMorty(item).then(res => {
+          console.log(res);
+        });
+      } else {
+        alert(
+          "not authenticated! Sign in or sign up in order to favorite items"
+        );
+      }
+    };
+  };
+
   render() {
     const { characters, page, maxPages, loading, currentFilter } = this.state;
     return (
@@ -123,7 +140,7 @@ class AppContainer extends Component {
               handleFilterChange={this.handleFilterChange}
               currentFilter={currentFilter}
             />
-            <Mortys data={characters} />
+            <Mortys data={characters} handleCardClick={this.handleCardClick} />
           </div>
         )}
       </div>
