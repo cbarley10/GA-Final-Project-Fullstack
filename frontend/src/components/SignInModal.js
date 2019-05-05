@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-responsive-modal";
-import axios from "axios";
+import { signIn } from "../utils/logInAndOut";
 
 class SignupModal extends React.Component {
   constructor(props) {
@@ -26,26 +26,14 @@ class SignupModal extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     const { email, password } = this.state;
-    let config = {
-      headers: {
-        "Content-type": "application/json"
-      }
-    };
-    axios
-      .post(
-        "http://localhost:4000/user/login",
-        {
-          email,
-          password
-        },
-        config
-      )
-      .then(res => {
-        const { headers, data } = res;
-        localStorage.setItem("x-auth", headers["x-auth"]);
-        localStorage.setItem("firstname", data.firstname);
-        window.location.reload();
-      });
+
+    signIn(email, password).then(res => {
+      const { headers, data } = res;
+      localStorage.setItem("x-auth", headers["x-auth"]);
+      localStorage.setItem("firstname", data.firstname);
+      window.location.reload();
+    });
+
     this.setState({
       email: "",
       password: "",

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SignUpModal from "./SignUpModal";
 import SignInModal from "./SignInModal";
-import { signOut } from "../utils/signOut";
+import { signOut } from "../utils/logInAndOut";
 
 class Header extends Component {
   constructor(props) {
@@ -27,6 +27,7 @@ class Header extends Component {
             <div className="navbar-nav ml-auto">
               {localStorage.getItem("x-auth") ? (
                 <React.Fragment>
+                  <button>View Favorites</button>
                   <span className="welcome">
                     Welcome {localStorage.getItem("firstname")}!
                   </span>

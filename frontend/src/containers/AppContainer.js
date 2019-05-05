@@ -15,7 +15,8 @@ class AppContainer extends Component {
       page: 1,
       maxPages: 0,
       loading: true,
-      currentFilter: null
+      currentFilter: null,
+      userFavorites: []
     };
   }
 
