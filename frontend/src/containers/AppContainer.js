@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Pagination from "../components/Pagination";
 import Header from "../components/Header";
 import Mortys from "../components/Mortys";
+import Message from "../components/Message";
 import { MAIN_URL } from "../constants";
 import { fetchMortys, fetchAllMortys } from "../utils/fetchMortys";
 import postMorty from "../utils/addFavorite";
@@ -16,7 +17,9 @@ class AppContainer extends Component {
       maxPages: 0,
       loading: true,
       currentFilter: null,
-      userFavorites: []
+      userFavorites: [],
+      errorMessage: null,
+      successMessage: null
     };
   }
 
@@ -104,9 +107,35 @@ class AppContainer extends Component {
   handleCardClick = item => {
     return () => {
       if (localStorage.getItem("x-auth")) {
-        postMorty(item).then(res => {
-          console.log(res);
-        });
+        postMorty(item)
+          .then(() => {
+            this.setState(
+              {
+                successMessage: `success! ${item.name} favorited.`
+              },
+              () => {
+                setTimeout(() => {
+                  this.setState({
+                    successMessage: null
+                  });
+                }, 3000);
+              }
+            );
+          })
+          .catch(() => {
+            this.setState(
+              {
+                errorMessage: "Character already favorited!"
+              },
+              () => {
+                setTimeout(() => {
+                  this.setState({
+                    errorMessage: null
+                  });
+                }, 3000);
+              }
+            );
+          });
       } else {
         alert(
           "not authenticated! Sign in or sign up in order to favorite items"
@@ -116,7 +145,15 @@ class AppContainer extends Component {
   };
 
   render() {
-    const { characters, page, maxPages, loading, currentFilter } = this.state;
+    const {
+      characters,
+      page,
+      maxPages,
+      loading,
+      currentFilter,
+      errorMessage,
+      successMessage
+    } = this.state;
     return (
       <div>
         <Header />
@@ -132,6 +169,10 @@ class AppContainer extends Component {
           </div>
         ) : (
           <div>
+            <Message
+              errorMessage={errorMessage}
+              successMessage={successMessage}
+            />
             <Pagination
               handleNextClick={this.handleNextClick}
               handlePrevClick={this.handlePrevClick}
