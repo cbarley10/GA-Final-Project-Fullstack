@@ -34,21 +34,15 @@ class SignupModal extends React.Component {
       localStorage.setItem("x-auth", headers["x-auth"]);
       window.location.reload();
     });
-
-    this.setState({
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      open: false
-    });
   };
 
   render() {
     const { open, firstname, lastname, email, password } = this.state;
     return (
       <React.Fragment>
-        <button onClick={this.onOpenModal}>Sign Up</button>
+        <button onClick={this.onOpenModal} className="btn btn-light signup">
+          Sign Up
+        </button>
         <Modal open={open} onClose={this.onCloseModal} center>
           <h5 className="modal-title">Sign Up</h5>
           <div className="modal-body">

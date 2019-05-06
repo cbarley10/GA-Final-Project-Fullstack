@@ -7,7 +7,8 @@ import Message from "../components/Message";
 import { MAIN_URL } from "../constants";
 import { fetchMortys, fetchAllMortys } from "../utils/fetchMortys";
 import postMorty from "../utils/addFavorite";
-
+import fetchFavorites from "../utils/fetchFavorites";
+let localResults = localStorage.getItem("results");
 class AppContainer extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +18,7 @@ class AppContainer extends Component {
       maxPages: 0,
       loading: true,
       currentFilter: null,
-      userFavorites: [],
+      userFavorites: false,
       errorMessage: null,
       successMessage: null
     };
@@ -77,31 +78,33 @@ class AppContainer extends Component {
   handleFilterChange = e => {
     let selected = e.target.value;
     let filterBy = e.target.id;
-
-    this.setState({
-      loading: true,
-      currentFilter: selected
-    });
-
-    if (filterBy === "species") {
-      fetchAllMortys(MAIN_URL, []).then(res => {
-        this.setState({
-          characters: res.filter(
-            item => item.species.toLowerCase() === selected
-          ),
-          loading: false
-        });
-      });
-    } else {
-      fetchAllMortys(MAIN_URL, []).then(res => {
-        this.setState({
-          characters: res.filter(
-            item => item.status.toLowerCase() === selected
-          ),
-          loading: false
-        });
-      });
-    }
+    this.setState(
+      {
+        loading: true,
+        currentFilter: selected
+      },
+      () => {
+        setTimeout(() => {
+          if (!localStorage.getItem("results")) {
+            fetchAllMortys(MAIN_URL, []).then(res => {
+              this.setState({
+                characters: res.filter(
+                  item => item[filterBy].toLowerCase() === selected
+                ),
+                loading: false
+              });
+            });
+          } else {
+            this.setState({
+              characters: JSON.parse(localResults).filter(
+                item => item[filterBy].toLowerCase() === selected
+              ),
+              loading: false
+            });
+          }
+        }, 1000);
+      }
+    );
   };
 
   handleCardClick = item => {
@@ -144,6 +147,23 @@ class AppContainer extends Component {
     };
   };
 
+  handleGetFavorites = () => {
+    this.setState({
+      loading: true,
+      userFavorites: true
+    });
+    fetchFavorites()
+      .then(res => {
+        this.setState({
+          characters: res,
+          loading: false
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   render() {
     const {
       characters,
@@ -152,11 +172,12 @@ class AppContainer extends Component {
       loading,
       currentFilter,
       errorMessage,
-      successMessage
+      successMessage,
+      userFavorites
     } = this.state;
     return (
       <div>
-        <Header />
+        <Header handleGetFavorites={this.handleGetFavorites} />
         {loading ? (
           <div className="d-flex justify-content-center">
             <div
@@ -181,6 +202,7 @@ class AppContainer extends Component {
               maxPages={maxPages}
               handleFilterChange={this.handleFilterChange}
               currentFilter={currentFilter}
+              userFavorites={userFavorites}
             />
             <Mortys data={characters} handleCardClick={this.handleCardClick} />
           </div>

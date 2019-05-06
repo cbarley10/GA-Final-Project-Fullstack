@@ -156,8 +156,19 @@ div[class*="styles_modal"] {
 
 span.welcome {
   color: white;
-  display: inline-block;
   margin-right: 20px;
+  margin-left: 20px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+nav.navbar {
+  padding: 15px !important;
+}
+
+.signup {
+  margin-right: 10px;
 }
 
 .alert {

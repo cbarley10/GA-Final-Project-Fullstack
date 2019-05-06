@@ -12,7 +12,8 @@ class Pagination extends Component {
       maxPages,
       handlePageNumberClick,
       handleFilterChange,
-      currentFilter
+      currentFilter,
+      userFavorites
     } = this.props;
 
     const renderPageNumbers = [...Array(maxPages)]
@@ -31,15 +32,15 @@ class Pagination extends Component {
         VISIBLE_PAGE_NUMS
       );
 
-    return (
-      <div className="container page">
-        {currentFilter ? null : (
-          <p>
-            <strong>page:</strong> {page}/{maxPages}
-          </p>
-        )}
+    if (userFavorites === false) {
+      return (
+        <div className="container page">
+          {currentFilter ? null : (
+            <p>
+              <strong>page:</strong> {page}/{maxPages}
+            </p>
+          )}
 
-        <p>
           {currentFilter ? (
             <span className="filter">
               <strong>Filtering By: </strong>{" "}
@@ -48,23 +49,25 @@ class Pagination extends Component {
               </span>
             </span>
           ) : null}
-        </p>
-        <DropdownOptions handleFilterChange={handleFilterChange} />
-        {currentFilter ? null : (
-          <div className="page-numbers">{renderPageNumbers}</div>
-        )}
-        {page === 1 || currentFilter ? null : (
-          <button className="previous" onClick={handlePrevClick}>
-            back
-          </button>
-        )}
-        {page === maxPages || currentFilter ? null : (
-          <button className="next" onClick={handleNextClick}>
-            next
-          </button>
-        )}
-      </div>
-    );
+          <DropdownOptions handleFilterChange={handleFilterChange} />
+          {currentFilter ? null : (
+            <div className="page-numbers">{renderPageNumbers}</div>
+          )}
+          {page === 1 || currentFilter ? null : (
+            <button className="previous" onClick={handlePrevClick}>
+              back
+            </button>
+          )}
+          {page === maxPages || currentFilter ? null : (
+            <button className="next" onClick={handleNextClick}>
+              next
+            </button>
+          )}
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
 }
 

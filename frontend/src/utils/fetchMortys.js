@@ -25,6 +25,7 @@ const fetchAllMortys = (url, arr) => {
       return fetchAllMortys(info.next, newArr);
     }
     arr = [...arr.concat(results)];
+    localStorage.setItem("results", JSON.stringify(arr));
     return arr;
   });
 };

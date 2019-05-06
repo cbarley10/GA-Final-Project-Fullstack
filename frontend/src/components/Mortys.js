@@ -12,7 +12,7 @@ const Mortys = props => {
       {data &&
         data.map(item => {
           return (
-            <MortyCard key={item.id} className="card">
+            <MortyCard key={item.id ? item.id : item._id} className="card">
               <span className="star" onClick={handleCardClick(item)}>
                 star
               </span>

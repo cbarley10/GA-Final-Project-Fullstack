@@ -17,8 +17,9 @@ class Header extends Component {
   };
 
   render = () => {
+    const { handleGetFavorites } = this.props;
     return (
-      <div>
+      <React.Fragment>
         <nav className="navbar navbar-expand-sm navbar-dark bg-danger mb-3 py-0">
           <div className="container">
             <a href="/" className="navbar-brand">
@@ -27,11 +28,21 @@ class Header extends Component {
             <div className="navbar-nav ml-auto">
               {localStorage.getItem("x-auth") ? (
                 <React.Fragment>
-                  <button>View Favorites</button>
+                  <button
+                    onClick={handleGetFavorites}
+                    className="btn btn-primary"
+                  >
+                    View Favorites
+                  </button>
                   <span className="welcome">
                     Welcome {localStorage.getItem("firstname")}!
                   </span>
-                  <button onClick={this.handleSignOut}>Logout</button>
+                  <button
+                    onClick={this.handleSignOut}
+                    className="btn btn-light"
+                  >
+                    Logout
+                  </button>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
@@ -42,7 +53,7 @@ class Header extends Component {
             </div>
           </div>
         </nav>
-      </div>
+      </React.Fragment>
     );
   };
 }

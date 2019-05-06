@@ -44,8 +44,10 @@ class SignupModal extends React.Component {
   render() {
     const { open, email, password } = this.state;
     return (
-      <div>
-        <button onClick={this.onOpenModal}>Sign In</button>
+      <React.Fragment>
+        <button onClick={this.onOpenModal} className="btn btn-info signin">
+          Sign In
+        </button>
         <Modal open={open} onClose={this.onCloseModal} center>
           <h5 className="modal-title">Sign In</h5>
           <div className="modal-body">
@@ -81,7 +83,7 @@ class SignupModal extends React.Component {
             </form>
           </div>
         </Modal>
-      </div>
+      </React.Fragment>
     );
   }
 }
