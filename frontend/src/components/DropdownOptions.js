@@ -4,7 +4,7 @@ import { SPECIES_OPTIONS, STATUS } from "../constants";
 const DropdownOptions = props => {
   const { handleFilterChange } = props;
   return (
-    <div>
+    <React.Fragment>
       <div>
         <select id="species" onChange={handleFilterChange}>
           <option key="-100" value="-----">
@@ -30,7 +30,7 @@ const DropdownOptions = props => {
           ))}
         </select>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 

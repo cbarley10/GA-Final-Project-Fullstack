@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SignUpModal from "./SignUpModal";
 import SignInModal from "./SignInModal";
 import { signOut } from "../utils/logInAndOut";
+import { Welcome } from "../styled-components/Welcome";
 
 class Header extends Component {
   constructor(props) {
@@ -34,9 +35,9 @@ class Header extends Component {
                   >
                     View Favorites
                   </button>
-                  <span className="welcome">
+                  <Welcome>
                     Welcome {localStorage.getItem("firstname")}!
-                  </span>
+                  </Welcome>
                   <button
                     onClick={this.handleSignOut}
                     className="btn btn-light"

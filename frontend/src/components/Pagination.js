@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import { VISIBLE_PAGE_NUMS } from "../constants";
 import { startingIndex } from "../utils/pagination";
 import DropdownOptions from "./DropdownOptions";
+import {
+  NumberButton,
+  NextBackButton,
+  PaginationContainer,
+  NumberButtonContainer
+} from "../styled-components/Pagination";
 
 class Pagination extends Component {
   render() {
@@ -18,14 +24,14 @@ class Pagination extends Component {
 
     const renderPageNumbers = [...Array(maxPages)]
       .map((_, index) => (
-        <button
+        <NumberButton
           key={index}
           id={index}
           onClick={handlePageNumberClick}
           className={page === index + 1 ? "current" : ""}
         >
           {index + 1}
-        </button>
+        </NumberButton>
       ))
       .splice(
         startingIndex(page, maxPages, VISIBLE_PAGE_NUMS),
@@ -34,7 +40,7 @@ class Pagination extends Component {
 
     if (!userFavorites) {
       return (
-        <div className="container page">
+        <PaginationContainer className="container page">
           {currentFilter ? null : (
             <p>
               <strong>page:</strong> {page}/{maxPages}
@@ -51,19 +57,15 @@ class Pagination extends Component {
           ) : null}
           <DropdownOptions handleFilterChange={handleFilterChange} />
           {currentFilter ? null : (
-            <div className="page-numbers">{renderPageNumbers}</div>
+            <NumberButtonContainer>{renderPageNumbers}</NumberButtonContainer>
           )}
           {page === 1 || currentFilter ? null : (
-            <button className="previous" onClick={handlePrevClick}>
-              back
-            </button>
+            <NextBackButton onClick={handlePrevClick}>back</NextBackButton>
           )}
           {page === maxPages || currentFilter ? null : (
-            <button className="next" onClick={handleNextClick}>
-              next
-            </button>
+            <NextBackButton onClick={handleNextClick}>next</NextBackButton>
           )}
-        </div>
+        </PaginationContainer>
       );
     } else {
       return (

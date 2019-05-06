@@ -214,7 +214,7 @@ class AppContainer extends Component {
             </div>
           </div>
         ) : (
-          <div>
+          <React.Fragment>
             <Message
               errorMessage={errorMessage}
               successMessage={successMessage}
@@ -234,7 +234,7 @@ class AppContainer extends Component {
               handleCardClick={this.handleCardClick}
               favoritedItems={favoritedItems}
             />
-          </div>
+          </React.Fragment>
         )}
       </div>
     );
