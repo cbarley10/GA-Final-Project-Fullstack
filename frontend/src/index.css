@@ -184,6 +184,10 @@ span.filter {
   padding: 20px;
 }
 
+i.far.fa-star {
+  cursor: pointer;
+}
+
 @media (max-width: 992px) {
   body h1 {
     font-size: 1.5rem;

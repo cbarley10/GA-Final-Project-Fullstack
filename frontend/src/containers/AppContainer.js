@@ -115,13 +115,16 @@ class AppContainer extends Component {
   };
 
   handleCardClick = item => {
+    const { favoritedItems } = this.state;
     return () => {
       postMorty(item)
-        .then(() => {
-          if (!localStorage.getItem("x-auth")) {
+        .then(res => {
+          if (localStorage.getItem("x-auth")) {
+            console.log(res);
             this.setState(
               {
-                successMessage: `success! ${item.name} favorited.`
+                successMessage: `Success! ${item.name} favorited.`,
+                favoritedItems: [...favoritedItems].concat(res.data)
               },
               () => {
                 setTimeout(() => {
