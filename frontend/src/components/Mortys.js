@@ -14,7 +14,7 @@ const Mortys = props => {
           return (
             <MortyCard key={item.id ? item.id : item._id} className="card">
               <span className="star" onClick={handleCardClick(item)}>
-                star
+                <i className="far fa-star" />
               </span>
               <MortyImage src={item.image} alt={item.image} />
               <h1>{item.name}</h1>

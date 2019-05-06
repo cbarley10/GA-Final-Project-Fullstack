@@ -8,6 +8,7 @@ import { MAIN_URL } from "../constants";
 import { fetchMortys, fetchAllMortys } from "../utils/fetchMortys";
 import postMorty from "../utils/addFavorite";
 import fetchFavorites from "../utils/fetchFavorites";
+
 let localResults = localStorage.getItem("results");
 class AppContainer extends Component {
   constructor(props) {
@@ -20,7 +21,8 @@ class AppContainer extends Component {
       currentFilter: null,
       userFavorites: false,
       errorMessage: null,
-      successMessage: null
+      successMessage: null,
+      favoritedItems: []
     };
   }
 
@@ -32,6 +34,11 @@ class AppContainer extends Component {
         characters: results,
         maxPages: info.pages,
         loading: false
+      });
+    });
+    fetchFavorites().then(res => {
+      this.setState({
+        favoritedItems: [...res]
       });
     });
   }
@@ -109,9 +116,9 @@ class AppContainer extends Component {
 
   handleCardClick = item => {
     return () => {
-      if (localStorage.getItem("x-auth")) {
-        postMorty(item)
-          .then(() => {
+      postMorty(item)
+        .then(() => {
+          if (!localStorage.getItem("x-auth")) {
             this.setState(
               {
                 successMessage: `success! ${item.name} favorited.`
@@ -124,11 +131,15 @@ class AppContainer extends Component {
                 }, 3000);
               }
             );
-          })
-          .catch(() => {
+          }
+        })
+        .catch(err => {
+          const { status, statusText } = err.response;
+
+          if (status === 401) {
             this.setState(
               {
-                errorMessage: "Character already favorited!"
+                errorMessage: `${statusText}: Sign in or sign up to view favorites!`
               },
               () => {
                 setTimeout(() => {
@@ -138,30 +149,40 @@ class AppContainer extends Component {
                 }, 3000);
               }
             );
-          });
-      } else {
-        alert(
-          "not authenticated! Sign in or sign up in order to favorite items"
-        );
-      }
+          } else {
+            this.setState(
+              {
+                errorMessage: `${statusText}: Already favorited this item!`
+              },
+              () => {
+                setTimeout(() => {
+                  this.setState({
+                    errorMessage: null
+                  });
+                }, 3000);
+              }
+            );
+          }
+        });
     };
   };
 
   handleGetFavorites = () => {
-    this.setState({
-      loading: true,
-      userFavorites: true
-    });
-    fetchFavorites()
-      .then(res => {
-        this.setState({
-          characters: res,
-          loading: false
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    const { favoritedItems } = this.state;
+    this.setState(
+      {
+        loading: true
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({
+            characters: [...favoritedItems],
+            loading: false,
+            userFavorites: true
+          });
+        }, 1000);
+      }
+    );
   };
 
   render() {
@@ -173,7 +194,8 @@ class AppContainer extends Component {
       currentFilter,
       errorMessage,
       successMessage,
-      userFavorites
+      userFavorites,
+      favoritedItems
     } = this.state;
     return (
       <div>
@@ -204,7 +226,11 @@ class AppContainer extends Component {
               currentFilter={currentFilter}
               userFavorites={userFavorites}
             />
-            <Mortys data={characters} handleCardClick={this.handleCardClick} />
+            <Mortys
+              data={characters}
+              handleCardClick={this.handleCardClick}
+              favoritedItems={favoritedItems}
+            />
           </div>
         )}
       </div>

@@ -32,7 +32,7 @@ class Pagination extends Component {
         VISIBLE_PAGE_NUMS
       );
 
-    if (userFavorites === false) {
+    if (!userFavorites) {
       return (
         <div className="container page">
           {currentFilter ? null : (
@@ -66,7 +66,13 @@ class Pagination extends Component {
         </div>
       );
     } else {
-      return null;
+      return (
+        <div style={{ textAlign: "center" }}>
+          <a href="/" className="btn btn-secondary">
+            Back to main page
+          </a>
+        </div>
+      );
     }
   }
 }
