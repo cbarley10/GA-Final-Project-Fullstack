@@ -63,7 +63,6 @@ app.get("/favorites", authenticate, (req, res) => {
 // DELETE /favorite/ID
 app.delete("/favorites/:id", authenticate, (req, res) => {
   let id = req.params.id;
-  console.log(id);
   if (!ObjectID.isValid(id)) {
     return res.status(404).send();
   }
