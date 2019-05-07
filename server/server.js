@@ -32,8 +32,10 @@ app.post("/favorites", authenticate, (req, res) => {
     status: req.body.status,
     name: req.body.name,
     image: req.body.image,
+    starred: true,
     _creator: req.user._id
   });
+
   favorite.save().then(
     doc => {
       res.send(doc);

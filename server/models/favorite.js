@@ -17,14 +17,17 @@ const FavoriteSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 1,
-    trim: true,
-    unique: true
+    trim: true
   },
   image: {
     type: String,
     required: true,
     minlength: 1,
     trim: true
+  },
+  starred: {
+    type: Boolean,
+    required: true
   },
   _creator: {
     type: mongoose.Schema.Types.ObjectId,
