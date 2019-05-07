@@ -21,19 +21,18 @@ class Star extends Component {
 
     const handleClick = item => {
       const { liked } = this.state;
-      this.setState(
-        {
-          liked: !liked
-        },
-        () => {
-          if (liked) {
-            handleUnfavoriteClick(item);
-          } else {
-            console.log("clicked favorite button!");
-            handleFavoriteClick(item);
-          }
-        }
-      );
+      if (liked || mappedFavorites.includes(item.name)) {
+        console.log(item);
+        this.setState({
+          liked: false
+        });
+        handleUnfavoriteClick(item);
+      } else {
+        this.setState({
+          liked: true
+        });
+        handleFavoriteClick(item);
+      }
     };
 
     return (

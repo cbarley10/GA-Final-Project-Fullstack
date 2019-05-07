@@ -70,18 +70,33 @@ code {
   background: black;
 }
 
-.filter .alive {
+.filter .alive,
+.status.alive {
   background: limegreen;
   color: white;
+  padding: 5px;
+  display: inline-block;
+  border-radius: 5px;
 }
 
-.filter .dead {
+.filter .dead,
+.status.dead {
   text-decoration: line-through;
   background: red;
+  color: white;
+  padding: 5px;
+  display: inline-block;
+  border-radius: 5px;
 }
 
-.unknown {
-  color: #9a9a9a;
+.filter .unknown,
+.status.unknown {
+  text-decoration: line-through;
+  background: #9a9a9a;
+  color: white;
+  padding: 5px;
+  display: inline-block;
+  border-radius: 5px;
 }
 
 .justify-content-center {
@@ -105,10 +120,6 @@ body .current {
 
 div[class*="styles_modal"] {
   width: 100%;
-}
-
-.status.unknown {
-  background: transparent;
 }
 
 nav.navbar {
