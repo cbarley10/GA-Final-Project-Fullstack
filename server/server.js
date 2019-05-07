@@ -61,14 +61,14 @@ app.get("/favorites", authenticate, (req, res) => {
 });
 
 // DELETE /favorite/ID
-app.delete("/favorite/:id", authenticate, (req, res) => {
+app.delete("/favorites/:id", authenticate, (req, res) => {
   let id = req.params.id;
+  console.log(id);
   if (!ObjectID.isValid(id)) {
     return res.status(404).send();
   }
   Favorite.findOneAndDelete({
-    _id: id,
-    _creator: req.user._id
+    _id: id
   })
     .then(favorite => {
       if (!favorite) {
