@@ -17,14 +17,6 @@ code {
   outline: 0;
 }
 
-.species span,
-.filter span {
-  display: inline-block;
-  color: white;
-  border-radius: 5px;
-  padding: 3px;
-}
-
 .human {
   background: skyblue;
 }
@@ -68,6 +60,14 @@ code {
 }
 .vampire {
   background: black;
+}
+
+.species span,
+.filter span {
+  display: inline-block;
+  color: white;
+  border-radius: 5px;
+  padding: 3px;
 }
 
 .filter .alive,

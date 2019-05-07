@@ -23,14 +23,18 @@ class Star extends Component {
       const { liked } = this.state;
       if (liked || mappedFavorites.includes(item.name)) {
         console.log(item);
-        this.setState({
-          liked: false
-        });
+        if (localStorage.getItem("x-auth")) {
+          this.setState({
+            liked: false
+          });
+        }
         handleUnfavoriteClick(item);
       } else {
-        this.setState({
-          liked: true
-        });
+        if (localStorage.getItem("x-auth")) {
+          this.setState({
+            liked: true
+          });
+        }
         handleFavoriteClick(item);
       }
     };
