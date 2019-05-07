@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { VISIBLE_PAGE_NUMS } from "../constants";
-import { startingIndex } from "../utils/pagination";
+import startingIndex from "../utils/pagination";
 import DropdownOptions from "./DropdownOptions";
 import {
   NumberButton,
@@ -55,6 +55,7 @@ class Pagination extends Component {
               </span>
             </span>
           ) : null}
+
           <DropdownOptions handleFilterChange={handleFilterChange} />
           {currentFilter ? null : (
             <NumberButtonContainer>{renderPageNumbers}</NumberButtonContainer>

@@ -8,11 +8,11 @@ const config = {
   }
 };
 
-const fetchFavorites = () => {
-  return axios.get(FAVORITES_URL, config).then(res => {
+const deleteFavorite = id => {
+  return axios.delete(`${FAVORITES_URL}/${id}`, config).then(res => {
     const { favorite } = res.data;
     return favorite;
   });
 };
 
-export default fetchFavorites;
+export default deleteFavorite;

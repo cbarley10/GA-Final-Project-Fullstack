@@ -4,10 +4,11 @@ import Pagination from "../components/Pagination";
 import Header from "../components/Header";
 import Mortys from "../components/Mortys";
 import Message from "../components/Message";
-import { MAIN_URL } from "../constants";
+import { API_URL, TIMEOUT_TIME } from "../constants";
 import { fetchMortys, fetchAllMortys } from "../utils/fetchMortys";
 import postMorty from "../utils/addFavorite";
 import fetchFavorites from "../utils/fetchFavorites";
+import deleteFavorite from "../utils/deleteFavorite";
 
 let localResults = localStorage.getItem("results");
 class AppContainer extends Component {
@@ -15,14 +16,14 @@ class AppContainer extends Component {
     super(props);
     this.state = {
       characters: [],
+      favoritedItems: [],
       page: 1,
       maxPages: 0,
       loading: true,
       currentFilter: null,
       userFavorites: false,
       errorMessage: null,
-      successMessage: null,
-      favoritedItems: []
+      successMessage: null
     };
   }
 
@@ -36,11 +37,13 @@ class AppContainer extends Component {
         loading: false
       });
     });
-    fetchFavorites().then(res => {
-      this.setState({
-        favoritedItems: [...res]
+    if (localStorage.getItem("x-auth")) {
+      fetchFavorites().then(res => {
+        this.setState({
+          favoritedItems: [...res]
+        });
       });
-    });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -93,7 +96,7 @@ class AppContainer extends Component {
       () => {
         setTimeout(() => {
           if (!localStorage.getItem("results")) {
-            fetchAllMortys(MAIN_URL, []).then(res => {
+            fetchAllMortys(API_URL, []).then(res => {
               this.setState({
                 characters: res.filter(
                   item => item[filterBy].toLowerCase() === selected
@@ -109,65 +112,111 @@ class AppContainer extends Component {
               loading: false
             });
           }
-        }, 1000);
+        }, TIMEOUT_TIME);
       }
     );
   };
 
-  handleCardClick = item => {
+  handleFavoriteClick = item => {
     const { favoritedItems } = this.state;
-    return () => {
-      postMorty(item)
+    postMorty(item)
+      .then(res => {
+        if (localStorage.getItem("x-auth")) {
+          this.setState(
+            {
+              successMessage: `Success! ${item.name} favorited.`,
+              favoritedItems: [...favoritedItems].concat(res.data)
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({
+                  successMessage: null
+                });
+              }, TIMEOUT_TIME);
+            }
+          );
+        }
+      })
+      .catch(err => {
+        const { status, statusText } = err.response;
+
+        if (status === 401) {
+          this.setState(
+            {
+              errorMessage: `${statusText}: Sign in or sign up to view favorites!`
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({
+                  errorMessage: null
+                });
+              }, TIMEOUT_TIME);
+            }
+          );
+        } else {
+          this.setState(
+            {
+              errorMessage: `${statusText}: Already favorited this item!`
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({
+                  errorMessage: null
+                });
+              }, TIMEOUT_TIME);
+            }
+          );
+        }
+      });
+  };
+
+  handleUnfavoriteClick = item => {
+    const { favoritedItems } = this.state;
+    const mappedFavorites = favoritedItems.map(fav => ({
+      _id: fav._id,
+      name: fav.name
+    }));
+
+    if (mappedFavorites.map(fav => fav.name).includes(item.name)) {
+      console.log("true!");
+      const foundIndex = mappedFavorites.findIndex(
+        fav => fav.name === item.name
+      );
+      const idToDelete = mappedFavorites[foundIndex]._id;
+
+      deleteFavorite(idToDelete)
         .then(res => {
-          if (localStorage.getItem("x-auth")) {
-            console.log(res);
-            this.setState(
-              {
-                successMessage: `Success! ${item.name} favorited.`,
-                favoritedItems: [...favoritedItems].concat(res.data)
-              },
-              () => {
-                setTimeout(() => {
-                  this.setState({
-                    successMessage: null
-                  });
-                }, 3000);
-              }
-            );
-          }
+          this.setState(
+            {
+              successMessage: `Success! ${item.name} deleted.`,
+              favoritedItems: [
+                ...favoritedItems.filter(item => item._id !== idToDelete)
+              ]
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({
+                  successMessage: ""
+                });
+              }, TIMEOUT_TIME);
+            }
+          );
         })
         .catch(err => {
-          const { status, statusText } = err.response;
-
-          if (status === 401) {
-            this.setState(
-              {
-                errorMessage: `${statusText}: Sign in or sign up to view favorites!`
-              },
-              () => {
-                setTimeout(() => {
-                  this.setState({
-                    errorMessage: null
-                  });
-                }, 3000);
-              }
-            );
-          } else {
-            this.setState(
-              {
-                errorMessage: `${statusText}: Already favorited this item!`
-              },
-              () => {
-                setTimeout(() => {
-                  this.setState({
-                    errorMessage: null
-                  });
-                }, 3000);
-              }
-            );
-          }
+          this.setState(
+            {
+              errorMessage: `Error! ${item.name} not deleted. ${err}`
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({
+                  errorMessage: ""
+                });
+              }, TIMEOUT_TIME);
+            }
+          );
         });
-    };
+    }
   };
 
   handleGetFavorites = () => {
@@ -183,7 +232,7 @@ class AppContainer extends Component {
             loading: false,
             userFavorites: true
           });
-        }, 1000);
+        }, TIMEOUT_TIME);
       }
     );
   };
@@ -231,8 +280,9 @@ class AppContainer extends Component {
             />
             <Mortys
               data={characters}
-              handleCardClick={this.handleCardClick}
               favoritedItems={favoritedItems}
+              handleFavoriteClick={this.handleFavoriteClick}
+              handleUnfavoriteClick={this.handleUnfavoriteClick}
             />
           </React.Fragment>
         )}

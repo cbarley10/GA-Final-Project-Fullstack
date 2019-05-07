@@ -4,30 +4,43 @@ import {
   MortyCard,
   MortyContainer
 } from "../styled-components/MortyStyled";
+import Star from "./Star";
 
 const Mortys = props => {
-  const { data, handleCardClick } = props;
+  const {
+    data,
+    handleFavoriteClick,
+    handleUnfavoriteClick,
+    favoritedItems
+  } = props;
+
   return (
     <MortyContainer className="container">
       {data &&
-        data.map(item => {
+        data.map(card => {
           return (
-            <MortyCard key={item.id ? item.id : item._id} className="card">
-              <span className="star" onClick={handleCardClick(item)}>
-                <i className="far fa-star" />
+            <MortyCard key={card._id ? card._id : card.id} className="card">
+              <span className="star">
+                <Star
+                  characterName={card.name}
+                  characterBody={card}
+                  favoritedItems={favoritedItems}
+                  handleUnfavoriteClick={handleUnfavoriteClick}
+                  handleFavoriteClick={handleFavoriteClick}
+                />
               </span>
-              <MortyImage src={item.image} alt={item.image} />
-              <h1>{item.name}</h1>
+              <MortyImage src={card.image} alt={card.image} />
+              <h1>{card.name}</h1>
               <p>
                 Status:{" "}
-                <span className={`${item.status.toLowerCase()} status`}>
-                  {item.status}
+                <span className={`${card.status.toLowerCase()} status`}>
+                  {card.status}
                 </span>
               </p>
               <p className="species">
                 Species:{" "}
-                <span className={item.species.toLowerCase()}>
-                  {item.species}
+                <span className={card.species.toLowerCase()}>
+                  {card.species}
                 </span>
               </p>
             </MortyCard>

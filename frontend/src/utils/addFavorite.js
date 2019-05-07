@@ -1,4 +1,5 @@
 import axios from "axios";
+import { FAVORITES_URL } from "../constants";
 
 const postMorty = item => {
   const config = {
@@ -7,13 +8,12 @@ const postMorty = item => {
       "x-auth": localStorage.getItem("x-auth")
     }
   };
-  const { status, species, type, name, image } = item;
+  const { status, species, name, image } = item;
   return axios.post(
-    "http://localhost:4000/favorites",
+    FAVORITES_URL,
     {
       status,
       species,
-      type,
       name,
       image
     },

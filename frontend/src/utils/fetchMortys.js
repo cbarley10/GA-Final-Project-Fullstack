@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MAIN_URL } from "../constants";
+import { API_URL } from "../constants";
 const config = {
   headers: {
     "Content-type": "application/json"
@@ -7,7 +7,7 @@ const config = {
 };
 
 const fetchMortys = page => {
-  let url = `${MAIN_URL}?page=${page}`;
+  let url = `${API_URL}?page=${page}`;
   return axios.get(url, config).then(res => {
     const { results, info } = res.data;
     return {

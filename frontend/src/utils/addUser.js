@@ -1,14 +1,16 @@
 import axios from "axios";
+import { USERS_URL } from "../constants";
+
+const config = {
+  headers: {
+    "Content-type": "application/json"
+  }
+};
 
 const addUser = (firstname, lastname, email, password) => {
-  const config = {
-    headers: {
-      "Content-type": "application/json"
-    }
-  };
   return axios
     .post(
-      "http://localhost:4000/user",
+      USERS_URL,
       {
         firstname,
         lastname,
