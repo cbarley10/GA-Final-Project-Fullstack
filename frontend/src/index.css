@@ -107,11 +107,39 @@ code {
 img {
   max-width: 100%;
   height: auto;
-  background: #f1f1fa;
   width: 400px;
   height: 300px;
   display: block;
   border: 0;
+}
+
+.navbar img {
+  max-width: 150px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.navbar-brand {
+  text-align: center;
+  padding: 15px;
+}
+
+nav:before {
+  content: "";
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  z-index: 0;
+}
+
+.footer-copyright.text-center.py-3 {
+  background: rgba(135, 206, 235, 0.3);
+}
+
+.navbar {
+  text-align: center;
 }
 
 body .current {

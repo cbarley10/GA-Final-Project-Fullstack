@@ -8,7 +8,7 @@ class Star extends Component {
       liked: false
     };
   }
-  render() {
+  render = () => {
     const {
       characterName,
       characterBody,
@@ -54,7 +54,7 @@ class Star extends Component {
         )}
       </div>
     );
-  }
+  };
 }
 
 export default Star;

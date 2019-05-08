@@ -286,6 +286,12 @@ class AppContainer extends Component {
             />
           </React.Fragment>
         )}
+        <footer>
+          <div className="footer-copyright text-center py-3">
+            Created using ReactJS by{" "}
+            <a href="mailto:connorwbarley@gmail.com">Connor Barley</a>
+          </div>
+        </footer>
       </div>
     );
   }

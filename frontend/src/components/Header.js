@@ -3,12 +3,11 @@ import SignUpModal from "./SignUpModal";
 import SignInModal from "./SignInModal";
 import { signOut } from "../utils/logInAndOut";
 import { Welcome } from "../styled-components/Welcome";
-
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "Rick and Morty Dictionary"
+      name: "The App"
     };
   }
 
@@ -21,9 +20,18 @@ class Header extends Component {
     const { handleGetFavorites } = this.props;
     return (
       <React.Fragment>
-        <nav className="navbar navbar-expand-sm navbar-dark bg-danger mb-3 py-0">
-          <div className="container">
+        <nav
+          className="navbar navbar-expand-sm navbar-dark mb-3 py-0"
+          style={{
+            background:
+              "url(https://2static.fjcdn.com/large/pictures/e9/95/e995f5_5964659.jpg)",
+            backgroundPosition: "50% 40%",
+            backgroundSize: "cover"
+          }}
+        >
+          <div className="container" style={{ zIndex: 1 }}>
             <a href="/" className="navbar-brand">
+              <img src="/logo.png" alt="logo" />
               {this.state.name}
             </a>
             <div className="navbar-nav ml-auto">
