@@ -1,4 +1,12 @@
-const server_url = "http://localhost:4000";
+const PROD = false;
+let server_url;
+
+if (PROD === true) {
+  server_url = "http://ec2-3-19-58-232.us-east-2.compute.amazonaws.com";
+} else {
+  server_url = "http://localhost:3001";
+}
+
 const VISIBLE_PAGE_NUMS = 5;
 const API_URL = "https://rickandmortyapi.com/api/character";
 const FAVORITES_URL = `${server_url}/favorites`;

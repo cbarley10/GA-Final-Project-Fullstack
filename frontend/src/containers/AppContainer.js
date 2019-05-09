@@ -178,7 +178,6 @@ class AppContainer extends Component {
     }));
 
     if (mappedFavorites.map(fav => fav.name).includes(item.name)) {
-      console.log("true!");
       const foundIndex = mappedFavorites.findIndex(
         fav => fav.name === item.name
       );

@@ -25,6 +25,10 @@ var corsOptions = {
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
+app.get("/", (req, res) => {
+  res.send("hello");
+});
+
 // POST /favorites
 app.post("/favorites", authenticate, (req, res) => {
   let favorite = new Favorite({
