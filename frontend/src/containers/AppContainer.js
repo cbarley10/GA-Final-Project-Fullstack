@@ -251,6 +251,17 @@ class AppContainer extends Component {
     return (
       <div>
         <Header handleGetFavorites={this.handleGetFavorites} />
+        <Message errorMessage={errorMessage} successMessage={successMessage} />
+        <Pagination
+          handleNextClick={this.handleNextClick}
+          handlePrevClick={this.handlePrevClick}
+          handlePageNumberClick={this.handlePageNumberClick}
+          page={page}
+          maxPages={maxPages}
+          handleFilterChange={this.handleFilterChange}
+          currentFilter={currentFilter}
+          userFavorites={userFavorites}
+        />
         {loading ? (
           <div className="d-flex justify-content-center">
             <div
@@ -263,20 +274,6 @@ class AppContainer extends Component {
           </div>
         ) : (
           <React.Fragment>
-            <Message
-              errorMessage={errorMessage}
-              successMessage={successMessage}
-            />
-            <Pagination
-              handleNextClick={this.handleNextClick}
-              handlePrevClick={this.handlePrevClick}
-              handlePageNumberClick={this.handlePageNumberClick}
-              page={page}
-              maxPages={maxPages}
-              handleFilterChange={this.handleFilterChange}
-              currentFilter={currentFilter}
-              userFavorites={userFavorites}
-            />
             <Mortys
               data={characters}
               favoritedItems={favoritedItems}

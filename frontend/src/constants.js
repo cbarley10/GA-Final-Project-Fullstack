@@ -1,4 +1,4 @@
-const PROD = false;
+const PROD = true;
 let server_url;
 
 if (PROD === true) {
