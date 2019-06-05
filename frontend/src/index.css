@@ -100,7 +100,7 @@ code {
 }
 
 .justify-content-center {
-  min-height: 100vh !important;
+  min-height: calc(100vh - 339px);
   align-items: center !important;
 }
 
